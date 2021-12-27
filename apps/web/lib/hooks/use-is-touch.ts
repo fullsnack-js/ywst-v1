@@ -4,7 +4,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent
  */
 
-import { useEnhancedEffect } from "@utils/guards";
+import { useEnhancedEffect } from "../../utils/guards";
 import { useState } from "react";
 
 interface ReturnDeviceType {

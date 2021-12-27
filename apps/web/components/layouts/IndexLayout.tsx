@@ -8,7 +8,8 @@ import { ScrollHeader } from "@components/common/ScrollHeader";
 import { useState } from "react";
 import { MobileMenuToggleButton } from "@components/common/navigation/MobileMenuToggle";
 import MobileNav from "@components/common/navigation/MobileNav";
-import { useDeviceDetect } from "lib/hooks/use-device-detect";
+import { useFullscreenNavContext } from "@lib/providers/GlobalNavigationContext";
+import { useDevice } from "lib/hooks/use-device";
 interface Props {
   children?: React.ReactNode | React.ReactNode[];
   seo?: SeoMeta;
@@ -17,27 +18,17 @@ interface Props {
 
 const IndexLayout = ({ seo, children, isMobile }: Props) => {
   const { seo: defaultSeo, mainNav, footerNav, socials } = DEFAULT_SETTINGS;
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isOpen, toggle, close } = useFullscreenNavContext();
+  const { isTouchDevice, isDesktop } = useDevice();
   return (
     <>
       <Seo seo={seo} defaultSeo={defaultSeo} />
       <ScrollHeader navigation={mainNav} />
-      {isMobile && (
-        <MobileMenuToggleButton
-          open={isMenuOpen}
-          handleClick={() => {
-            setIsMenuOpen(!isMenuOpen);
-          }}
-        />
+      {isTouchDevice && (
+        <MobileMenuToggleButton open={isOpen} handleClick={toggle} />
       )}
       {children}
-      <MobileNav
-        onClose={() => {
-          setIsMenuOpen(false);
-        }}
-        navigation={mainNav}
-        visible={isMenuOpen}
-      />
+      <MobileNav navigation={mainNav} />
       <Footer footerNav={footerNav} socials={socials} />
     </>
   );

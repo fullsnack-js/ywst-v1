@@ -6,8 +6,7 @@ import {
   getOrientationFromWindow,
 } from "./DeviceProvider.types";
 
-import { isBrowser, useEnhancedEffect } from "utils/guards";
-
+import { isBrowser, useEnhancedEffect } from "../../../utils/guards";
 import { DeviceContext } from "./DeviceContext";
 const DEBOUNCE_MS = 100;
 
@@ -21,8 +20,8 @@ export const DeviceProvider = ({
 
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
-  const [orientation, setOrientation] = useState<DeviceOrientationType>(
-    getOrientationFromWindow(window)
+  const [orientation, setOrientation] = useState(
+    window.innerHeight > window.innerWidth ? "PORTRAIT" : "LANDSCAPE"
   );
 
   const handleResize = useDebouncedCallback(() => {

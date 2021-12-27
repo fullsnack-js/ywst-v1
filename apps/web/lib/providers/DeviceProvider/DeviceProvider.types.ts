@@ -1,7 +1,4 @@
-export enum DeviceOrientationType {
-  PORTRAIT = "PORTRAIT",
-  LANDSCAPE = "LANDSCAPE",
-}
+export type DeviceOrientationType = "PORTRAIT" | "LANDSCAPE";
 
 export enum DeviceType {
   MOBILE = "MOBILE",
@@ -20,18 +17,16 @@ export interface DeviceProviderProps {
 
 export interface DeviceContextType {
   windowSize: DeviceWindow;
-  orientation: DeviceOrientationType;
+  orientation: string;
 }
 
 export interface DeviceInfo {
   windowSize: DeviceWindow;
-  orientation: DeviceOrientationType;
+  orientation: string;
   isTouchDevice: boolean;
   isPhone: boolean;
   isTablet: boolean;
   isDesktop: boolean;
 }
 export const getOrientationFromWindow = (window: any): DeviceOrientationType =>
-  window.innerHeight > window.innerWidth
-    ? DeviceOrientationType.PORTRAIT
-    : DeviceOrientationType.LANDSCAPE;
+  window.innerHeight > window.innerWidth ? "PORTRAIT" : "LANDSCAPE";

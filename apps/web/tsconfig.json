@@ -29,7 +29,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "__tests__",
+    "lib/hooks/__tests__",
     "utils/debounce.j/s"
   ],
   "exclude": ["node_modules"]

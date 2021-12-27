@@ -4,6 +4,7 @@ import { cache } from "@emotion/css";
 import { CacheProvider } from "@emotion/react";
 import { GlobalStyles } from "twin.macro";
 import { DeviceProvider } from "lib/providers/DeviceProvider";
+import FullscreenNavProvider from "@lib/providers/GlobalNavigationContext";
 function MyApp({ Component, pageProps }: NextPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
   return (
@@ -13,8 +14,10 @@ function MyApp({ Component, pageProps }: NextPropsWithLayout) {
       </Head>
       <CacheProvider value={cache}>
         <DeviceProvider>
-          <GlobalStyles />
-          {getLayout(<Component {...pageProps} />)}
+          <FullscreenNavProvider>
+            <GlobalStyles />
+            {getLayout(<Component {...pageProps} />)}
+          </FullscreenNavProvider>
         </DeviceProvider>
       </CacheProvider>
     </>

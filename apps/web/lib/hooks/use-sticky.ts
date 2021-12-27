@@ -3,6 +3,7 @@ import { useLayoutEffect, useEffect, useState } from "react";
 // import { useScroll } from "./use-scroll";
 import { useDebounce } from "./use-debounce";
 import { isBrowser, useEnhancedEffect } from "../../utils/guards";
+import { useDevice } from "./use-device";
 
 interface ScrollPosition {
   scrollY: number;
@@ -36,10 +37,13 @@ export function useSticky({
 }: StickyProps): StickyResult {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const { isTouchDevice, isDesktop } = useDevice();
   const handleScroll = () => {
     const currentScrollPos = isBrowser ? window.scrollY : 0;
     setVisible(
-      (prevScrollPos > currentScrollPos && prevScrollPos > minPxScrolled) ||
+      (isDesktop &&
+        prevScrollPos > currentScrollPos &&
+        prevScrollPos > minPxScrolled) ||
         currentScrollPos < minTopOffset
     );
     setPrevScrollPos(currentScrollPos);

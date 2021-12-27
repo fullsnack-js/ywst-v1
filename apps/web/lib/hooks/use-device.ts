@@ -1,11 +1,14 @@
-import { DeviceInfo, useDeviceContext } from "@lib/providers/DeviceProvider";
+import {
+  DeviceInfo,
+  useDeviceContext,
+} from "../providers/DeviceProvider/index";
 import { useMemo } from "react";
 import { useIsTouchDevice } from "./use-is-touch";
 
 export const useDevice = (): DeviceInfo => {
   const { orientation, windowSize } = useDeviceContext();
   const { isTouchDevice } = useIsTouchDevice();
-
+  console.log({ isTouchDevice });
   return useMemo(
     () => ({
       orientation,

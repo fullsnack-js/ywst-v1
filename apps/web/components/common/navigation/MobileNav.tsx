@@ -7,6 +7,7 @@ import { Dialog } from "@headlessui/react";
 import { MobileMenuToggleButton } from "./MobileMenuToggle";
 import Transition from "./Transition";
 import { NavigationProps } from "../Nav";
+import { useFullscreenNavContext } from "@lib/providers/GlobalNavigationContext";
 
 /**
  * HeadlessUI "Dialog (Modal)"
@@ -16,8 +17,6 @@ import { NavigationProps } from "../Nav";
 
 type ModalProps = {
   navigation: NavigationItem[];
-  onClose: () => void;
-  visible?: boolean;
   children?: React.ReactNode;
   dialogOverlayProps?: { as?: React.ElementType };
   titleProps?: { as?: React.ElementType };
@@ -26,31 +25,20 @@ type ModalProps = {
 
 export default function Modal({
   navigation,
-  onClose,
-  visible,
   children,
   dialogOverlayProps,
 }: ModalProps) {
-  // let [isOpen, setIsOpen] = useState(false);
-
-  // function closeModal() {
-  //   setIsOpen(false);
-  // }
-
-  // function openModal() {
-  //   setIsOpen(true);
-  // }
-
+  const { isOpen, toggle, close } = useFullscreenNavContext();
   return (
-    <Transition show={visible} as={Fragment}>
+    <Transition show={isOpen} as={Fragment}>
       <Dialog
         tw="fixed inset-0 flex items-center justify-center h-screen w-screen"
         onClose={() => {}}
         unmount={true}>
         <MobileMenuToggleButton
           open={true}
-          handleClick={onClose}
-          hide={!visible}
+          handleClick={close}
+          hide={!isOpen}
         />
         <Transition.Child {...overlayTransitionProps} as="div">
           <Dialog.Overlay
@@ -62,7 +50,7 @@ export default function Modal({
           <div tw="z-20 w-full h-full overflow-y-auto flex py-8 inset-0 absolute bg-gray-900 text-white transition-all transform justify-center items-center">
             <div tw="text-center space-y-8 lg:h-auto">
               {navigation.map((item, _index) => (
-                <FullNavItem hide={!visible} {...item.navLink} />
+                <FullNavItem hide={!isOpen} {...item.navLink} />
               ))}
             </div>
           </div>

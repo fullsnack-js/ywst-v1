@@ -1,4 +1,5 @@
 // https:// www.devtwins.com/blog/sticky-navbar-hides-scroll
+import { useDevice } from "@lib/hooks/use-device";
 import { useScroll } from "@lib/hooks/use-scroll";
 import { useSticky } from "@lib/hooks/use-sticky";
 import { useLayoutEffect, useState } from "react";
@@ -25,6 +26,7 @@ export const ScrollHeader = ({ navigation }: Props) => {
   //   minTopOffset: 10,
   //   debounceMs: 100,
   // });
+
   const { visible } = useSticky({
     minPxScrolled: 80,
     minTopOffset: 10,
